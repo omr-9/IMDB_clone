@@ -11,8 +11,8 @@ export const connectDb = async () => {
   }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URI ?? '', {
-      dbName: 'next-imdb-clerk', 
+    await mongoose.connect(process.env.MONGODB_URI!, {
+      dbName: 'IMDb-clone', 
     });
     initialized = true;
     console.log('MongoDB connected');

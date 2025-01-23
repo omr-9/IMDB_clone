@@ -12,8 +12,12 @@ export const createOrUpdateUser = async (
   image_url: string | null,
   email_addresses: EmailAddress[]
 ) => {
+  if (!id) {
+    throw new Error("Error: User ID is undefined");
+  }
   try {
     await connectDb();
+    const email = email_addresses[0]?.email_address || "no-email@example.com";
     const user = await User.findOneAndUpdate(
       { clerkId: id },
       {
@@ -21,7 +25,7 @@ export const createOrUpdateUser = async (
           firstName: first_name,
           lastName: last_name,
           profilePicture: image_url,
-          email: email_addresses[0].email_address,
+          email: email,
         },
       },
       { upsert: true, new: true }
@@ -29,14 +33,19 @@ export const createOrUpdateUser = async (
     return user;
   } catch (error) {
     console.log("Error: Could not create or update user", error);
+    throw error;
   }
 };
 
 export const deleteUser = async (id: string | undefined) => {
+  if (!id) {
+    throw new Error("Error: User ID is undefined");
+  }
   try {
     await connectDb();
-    await User.findByIdAndDelete({ clerkId: id });
+    await User.findOneAndDelete({ clerkId: id });
   } catch (error) {
     console.log("Error: Could not delete user", error);
+    throw error;
   }
 };
