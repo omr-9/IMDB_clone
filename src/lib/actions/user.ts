@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import User from '../models/user.model';
 import { connect } from '../mongodb/mongoose';
 import { User as ClerkUser } from '@clerk/nextjs/server';
