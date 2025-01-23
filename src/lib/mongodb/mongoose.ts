@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 let initialized = false;
 
-export const connect = async () => {
+export const connectDb = async () => {
   mongoose.set('strictQuery', true); // Optional: Suppresses Mongoose deprecation warning for `strictQuery`.
 
   if (initialized) {

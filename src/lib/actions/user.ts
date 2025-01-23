@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import User from '../models/user.model';
-import { connect } from '../mongodb/mongoose';
-import { User as ClerkUser } from '@clerk/nextjs/server';
+import User from "../models/user.model";
+import { connectDb } from "../mongodb/mongoose";
+
+interface EmailAddress {
+  email_address: string;
+}
 
 export const createOrUpdateUser = async (
   id: string | undefined,
   first_name: string | null,
   last_name: string | null,
   image_url: string | null,
-  email_addresses: { email_address: string }[]
+  email_addresses: EmailAddress[]
 ) => {
   try {
-    await connect();
+    await connectDb();
     const user = await User.findOneAndUpdate(
       { clerkId: id },
       {
@@ -19,24 +21,22 @@ export const createOrUpdateUser = async (
           firstName: first_name,
           lastName: last_name,
           profilePicture: image_url,
-          email: email_addresses[0]?.email_address,
+          email: email_addresses[0].email_address,
         },
       },
       { upsert: true, new: true }
     );
     return user;
   } catch (error) {
-    console.log('Error: Could not create or update user:', error);
-    throw error; // Re-throw the error to handle it in the calling function
+    console.log("Error: Could not create or update user", error);
   }
 };
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (id: string | undefined) => {
   try {
-    await connect();
-    await User.findOneAndDelete({ clerkId: id });
+    await connectDb();
+    await User.findByIdAndDelete({ clerkId: id });
   } catch (error) {
-    console.log('Error: Could not delete user:', error);
-    throw error; // Re-throw the error to handle it in the calling function
+    console.log("Error: Could not delete user", error);
   }
 };
