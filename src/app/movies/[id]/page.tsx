@@ -7,7 +7,7 @@ import { BiArrowBack } from 'react-icons/bi'
 
 export const genertaeMetadata = async ({params}:{params:any}) => {
     const {id:movieId} = await params
-    const movie = await getSingleMovie(Number(movieId))
+    const movie = await getSingleMovie(movieId)
     if(!movie) return{
         title: 'Not Found'
     }
@@ -18,7 +18,7 @@ export const genertaeMetadata = async ({params}:{params:any}) => {
 }
 export default async function Movie({params} :any) {
     const {id:movieId} = await params;
-    const movie = await getSingleMovie(Number(movieId));
+    const movie = await getSingleMovie(movieId);
     // console.log(movie)
 
     if (!movie) {
