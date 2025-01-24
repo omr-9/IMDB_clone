@@ -7,7 +7,7 @@ import { FiThumbsUp } from "react-icons/fi";
 const Card = ({ result }: { result: Media }) => {
   console.log(result.id);
   return (
-    <div className=" group curor-pointer hover:scale-105  transition-all duration-300 sm:shadow-slate sm:shadow-md rounded-lg sm:border-slate-400 ease-in-out">
+    <div className="my-2 group curor-pointer  transition-all duration-300 sm:shadow-slate sm:shadow-md rounded-lg sm:border-slate-400 ease-in-out">
       <Link href={`/movie/${result.id}`}>
         <div>
           <Image
