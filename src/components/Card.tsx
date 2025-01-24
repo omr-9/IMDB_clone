@@ -8,7 +8,7 @@ const Card = ({ result }: { result: Media }) => {
   console.log(result.id);
   return (
     <div className="my-2 group curor-pointer  transition-all duration-300 sm:shadow-slate sm:shadow-md rounded-lg sm:border-slate-400 ease-in-out">
-      <Link href={`/movie/${result.id}`}>
+      <Link href={`/movies/${result.id}`}>
         <div>
           <Image
             src={`${
