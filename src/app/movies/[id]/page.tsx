@@ -42,12 +42,15 @@ export default async function Movie({params} :any) {
   return (
     <div className='w-full'>
     <div className='p-4 md:pt-8 flex flex-col md:flex-row content-center max-w-6xl mx-auto md:space-x-6'>
-      <img
+      <Image
+      alt={movie.title || 'Poster'}
+      width={500}
+      height={500}
         src={`https://image.tmdb.org/t/p/original/${
           movie.backdrop_path || movie.poster_path
         }`}
         className='rounded-lg w-full md:w-96 h-56 object-cover'
-      ></img>
+      />
       <div className='p-2'>
         <h2 className='text-lg mb-3 font-bold'>
           {movie.title || movie.name}
@@ -61,14 +64,6 @@ export default async function Movie({params} :any) {
           <span className='font-semibold mr-1'>Rating:</span>
           {movie.vote_count}
         </p>
-        {/* <AddToFav
-          movieId={movieId}
-          title={movie.title || movie.name}
-          image={movie.backdrop_path || movie.poster_path}
-          overview={movie.overview}
-          releaseDate={movie.release_date || movie.first_air_date}
-          voteCount={movie.vote_count}
-        /> */}
       </div>
     </div>
   </div>
