@@ -5,7 +5,7 @@ import React from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 
-export const genertaeMetadata = async ({params}:any) => {
+export const generateMetadata = async ({params}:any) => {
     const {id:movieId} = await params
     const movie = await getSingleMovie(Number(movieId))
     if(!movie) return{
