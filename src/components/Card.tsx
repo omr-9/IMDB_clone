@@ -10,19 +10,19 @@ const Card = ({ result }: { result: Media }) => {
     <div className="my-2 group curor-pointer  transition-all duration-300 sm:shadow-slate sm:shadow-md rounded-lg sm:border-slate-400 ease-in-out">
       <Link href={`/movies/${result.id}`}>
         <div>
-          <Image
-            src={`${
-              result.backdrop_path || result.poster_path
-                ? `https://image.tmdb.org/t/p/w500${
-                    result.backdrop_path || result.poster_path
-                  }`
-                : ""
-            }`}
-            alt={result.title || result.name || "Poster"}
-            width={500}
-            height={500}
-            className="object-cover  sm:h-36 group-hover:opacity-80 sm:rounded-t-lg w-full transition duration-300 "
-          />
+        <Image
+  src={
+    result.backdrop_path || result.poster_path
+      ? `https://image.tmdb.org/t/p/w500${result.backdrop_path || result.poster_path}`
+      : "/placeholder.jpg" // Fallback image
+  }
+  alt={result.title || result.name || "Movie Poster"}
+  width={500}
+  height={500}
+  className="object-cover sm:h-36 group-hover:opacity-80 sm:rounded-t-lg w-full transition duration-300"
+  placeholder="blur" // Optional: Add blur-up placeholder
+  blurDataURL="/placeholder-blur.jpg" // Optional: Add a small blur image
+/>
         </div>
         <div className="p-2">
           <p className="text-sm line-clamp-3">{result.overview}</p>

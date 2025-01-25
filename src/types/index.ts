@@ -19,3 +19,12 @@ export interface Media {
     vote_count: number;
     origin_country?: string[];
 }
+
+export interface PageProps {
+    params: {
+      genre: string;
+    };
+    searchParams: {
+      page?: string;
+    };
+  }

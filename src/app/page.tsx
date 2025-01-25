@@ -1,19 +1,26 @@
-import Results from '@/components/Results';
-import React from 'react'
+import Pagination from "@/components/Pagination";
+import Skeleton from "@/components/Skeleton";
+import { getAllMovies } from "@/lib/api";
+import React, { lazy, Suspense } from "react";
 
-const API_KEY = process.env.API_KEY
-export default async function Home() {
-  const res = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`);
-  const data = await res.json();
-  if(!res.ok) throw new Error("Faild to fetch data");
-  const results = data.results
-  console.log(results)
+const Results = lazy(() =>
+  new Promise((resolve) => setTimeout(resolve, 5000)).then(
+    () => import("@/components/Results")
+  )
+);
 
-
+export default async function Home({ searchParams }: { searchParams: any }) {
+  const params = await searchParams;
+  const page = params?.page || 1;
+  const res = await getAllMovies(Number(page));
+  const { results, total_pages: totalPages } = res;
 
   return (
     <div>
-      <Results results={results} />
+      <Suspense fallback={<Skeleton length={20} />}>
+        <Results results={results} />
+      </Suspense>
+      <Pagination currentPage={Number(page)} totalPages={totalPages} />
     </div>
-  )
+  );
 }
