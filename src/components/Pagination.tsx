@@ -54,13 +54,13 @@ const Pagination = ({
   return (
     <div className="flex items-center justify-center gap-4 my-7">
       {/* Previous Page Button */}
-      <FaArrowLeft
+      <button
         onClick={() => handlePageChange(currentPage - 1)}
-        className={`size-8 bg-amber-500 p-2 rounded-md cursor-pointer ${
-          currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+        className={` bg-amber-500 p-2 rounded-md cursor-pointer ${
+          currentPage === 1 ? "opacity-50 cursor-not-allowed" : "font-semi-bold"
         }`}
         aria-disabled={currentPage === 1}
-      />
+      >Prev</button>
 
       {/* Page Numbers */}
       <div className="flex items-center gap-2">
@@ -86,13 +86,14 @@ const Pagination = ({
       </div>
 
       {/* Next Page Button */}
-      <FaArrowRight
+      <button
         onClick={() => handlePageChange(currentPage + 1)}
-        className={`size-8 bg-amber-500 p-2 rounded-md cursor-pointer ${
+        className={` bg-amber-500 p-2 rounded-md cursor-pointer  font-semibold ${
           currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
         }`}
         aria-disabled={currentPage === totalPages}
-      />
+      >Next
+      </button>
     </div>
   );
 };
