@@ -1,6 +1,4 @@
 "use client";
-
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 const Pagination = ({
