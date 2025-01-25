@@ -3,7 +3,7 @@ const API_KEY = process.env.API_KEY;
 export const getAllMovies = async (
   page: number = 1,
   search?: string,
-  genre?: string,
+  // genre?: string,
 ): Promise<{ results: any[]; total_pages: number }> => {
   try {
     const url = search
