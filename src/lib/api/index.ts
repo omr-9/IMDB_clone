@@ -3,12 +3,12 @@ const API_KEY = process.env.API_KEY;
 export const getAllMovies = async (
   page: number = 1,
   search?: string,
-  genre: string = "trending/all/week"
+  genre?: string,
 ): Promise<{ results: any[]; total_pages: number }> => {
   try {
     const url = search
       ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search}&language=en-US&page=${page}&include_adult=false`
-      : `https://api.themoviedb.org/3/${genre}?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false`;
+      : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false`;
     const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to fetch movie data");
     return await res.json();

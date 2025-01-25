@@ -14,13 +14,14 @@ export default async function Home({ searchParams }: { searchParams: any }) {
   const page = params?.page || 1;
   const res = await getAllMovies(Number(page));
   const { results, total_pages: totalPages } = res;
+  const limitPages = Math.min(500, totalPages); 
 
   return (
     <div>
       <Suspense fallback={<Skeleton length={20} />}>
         <Results results={results} />
       </Suspense>
-      <Pagination currentPage={Number(page)} totalPages={totalPages} />
+      <Pagination currentPage={Number(page)} totalPages={limitPages} />
     </div>
   );
 }

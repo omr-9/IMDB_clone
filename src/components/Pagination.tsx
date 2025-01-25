@@ -1,18 +1,28 @@
-"use client";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
-const Pagination = ({
-  currentPage,
-  totalPages,
-}: {
+interface PaginationProps {
   currentPage: number;
   totalPages: number;
-}) => {
+  searchTerm?: string;
+  genre?: string;
+}
+
+const Pagination = ({ currentPage, totalPages, searchTerm,genre }: PaginationProps) => {
   const router = useRouter();
 
+  // Handle page change
   const handlePageChange = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages) return; // Prevent invalid page numbers
-    router.push(`/?page=${newPage}`); // Update the URL with the new page
+    if (newPage < 1 || newPage > totalPages) return; 
+
+    if (searchTerm) {
+      router.push(`/search/${searchTerm}?page=${newPage}`);
+    }else if(genre){
+      router.push(`/top/${genre}?page=${newPage}`);
+    } else {
+      router.push(`/?page=${newPage}`);
+    }
   };
 
   // Generate the pagination range
@@ -49,48 +59,63 @@ const Pagination = ({
     return range;
   };
 
+  // Get the pagination range
+  const paginationRange = getPaginationRange();
+
+  if (totalPages <= 1) {
+    return (
+      <div className='px-4 py-2 flex justify-center w-fit items-center max-w-6xl mb-4 mx-auto rounded-lg text-white bg-amber-600'>
+        1
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center gap-4 my-7">
-      {/* Previous Page Button */}
+    <div className="flex justify-center items-center my-8 space-x-2">
+      {/* Previous Button */}
       <button
         onClick={() => handlePageChange(currentPage - 1)}
-        className={` bg-amber-500 p-2 rounded-md cursor-pointer ${
-          currentPage === 1 ? "opacity-50 cursor-not-allowed" : "font-semi-bold"
+        disabled={currentPage === 1}
+        className={`px-4 py-2 rounded-lg ${
+          currentPage === 1
+            ? 'bg-gray-300 cursor-not-allowed'
+            : 'bg-amber-500 hover:bg-amber-600 text-white'
         }`}
-        aria-disabled={currentPage === 1}
-      >Prev</button>
+      >
+        Previous
+      </button>
 
-      {/* Page Numbers */}
-      <div className="flex items-center gap-2">
-        {getPaginationRange().map((item, index) =>
-          item === "..." ? (
-            <span key={index} className="font-bold">
-              ...
-            </span>
+      {/* Pagination Numbers */}
+      {paginationRange.map((item, index) => (
+        <React.Fragment key={index}>
+          {item === "..." ? (
+            <span className="px-4 py-2">...</span>
           ) : (
             <button
-              key={index}
               onClick={() => handlePageChange(item as number)}
-              className={`font-bold text-sm size-8 rounded-md grid place-content-center ${
-                currentPage === item
-                  ? "bg-amber-500 text-white"
-                  : "bg-gray-100 text-black hover:bg-gray-200"
+              className={`px-4 py-2 rounded-lg  ${
+                item === currentPage
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
               }`}
             >
               {item}
             </button>
-          )
-        )}
-      </div>
+          )}
+        </React.Fragment>
+      ))}
 
-      {/* Next Page Button */}
+      {/* Next Button */}
       <button
         onClick={() => handlePageChange(currentPage + 1)}
-        className={` bg-amber-500 p-2 rounded-md cursor-pointer  font-semibold ${
-          currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+        disabled={currentPage === totalPages}
+        className={`px-4 py-2 rounded-lg ${
+          currentPage === totalPages
+            ? 'bg-gray-300 cursor-not-allowed'
+            : 'bg-amber-500 hover:bg-amber-600 text-white'
         }`}
-        aria-disabled={currentPage === totalPages}
-      >Next
+      >
+        Next
       </button>
     </div>
   );
